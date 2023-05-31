@@ -221,13 +221,13 @@ select datepart(day, LocalTime) as 'day',
 AS
  (SELECT  datepart(hour, LocalTime) Access_Time, COUNT([CardCode]) AS 'Vehicle_Accessed_per_hr'
   FROM [ASLog].[dbo].[AccessLog]
-  WHERE [CardBits]=34 AND [LocalTime] BETWEEN '2023-04-14 00:01:00.000' AND '2023-04-14 23:59:00.000'
+  WHERE [CardBits]=34 AND [LocalTime] BETWEEN '2023-05-21 00:01:00.000' AND '2023-05-27 23:59:00.000'
   GROUP BY datepart(hour, LocalTime)
  ),
   pedestrian_time AS
 (SELECT  datepart(hour, LocalTime) AS Access_Time, COUNT([CardCode]) AS 'Pesdestrian_Accessed_per_hr'
   FROM [ASLog].[dbo].[AccessLog]
-  WHERE [CardBits]=25 AND [LocalTime] BETWEEN '2023-04-14 00:01:00.000' AND '2023-04-14 23:59:00.000'
+  WHERE [CardBits]=25 AND [LocalTime] BETWEEN '2023-05-21 00:01:00.000' AND '2023-05-27 23:59:00.000'
   GROUP BY datepart(hour, LocalTime)
  )
  SELECT * FROM
@@ -240,14 +240,27 @@ AS
 AS
  (SELECT  datepart(day, LocalTime) Access_Time, COUNT([CardCode]) AS 'Vehicle_Accessed_per_day'
   FROM [ASLog].[dbo].[AccessLog]
-  WHERE [CardBits]=34 AND [LocalTime] BETWEEN '2023-04-16 00:01:00.000' AND '2023-04-22 23:59:00.000' AND [DoorID]= 1
+  WHERE [CardBits]=34 AND [LocalTime] BETWEEN '2023-05-21 00:01:00.000' AND '2023-05-27 23:59:00.000' AND [DoorID]= 1
   GROUP BY datepart(day, LocalTime)
  ),
   pedestrian_time AS
 (SELECT  datepart(day, LocalTime) AS Access_Time, COUNT([CardCode]) AS 'Pesdestrian_Accessed_per_day'
   FROM [ASLog].[dbo].[AccessLog]
-  WHERE [CardBits]=25 AND [LocalTime] BETWEEN '2023-04-16 00:01:00.000' AND '2023-04-22 23:59:00.000' AND [DoorID]= 0
+  WHERE [CardBits]=25 AND [LocalTime] BETWEEN '2023-05-21 00:01:00.000' AND '2023-05-27 23:59:00.000' AND [DoorID]= 0
   GROUP BY datepart(day, LocalTime)
  )
  SELECT * FROM
  vehicle_time LEFT JOIN pedestrian_time ON vehicle_time.Access_Time=pedestrian_time.Access_Time
+
+ SELECT COUNT(DISTINCT [CardNo]) AS 'ALL CAPTURED TAGS'
+  FROM [ASConfig].[dbo].[Card]
+  WHERE CodeType=34 AND [LastAccess_UTC] IS NOT NULL
+
+SELECT COUNT(DISTINCT [CardNo]) AS 'CAPTURED BUT NOT REGISTERED TAGS'
+  FROM [ASConfig].[dbo].[Card]
+  WHERE CodeType=34 AND [LastAccess_UTC] IS NOT NULL and CardholderID =0
+
+
+  SELECT DISTINCT [CardNo], [CardholderID]
+  FROM [ASConfig].[dbo].[Card]
+  WHERE CodeType=34 AND [LastAccess_UTC] IS NOT NULL
