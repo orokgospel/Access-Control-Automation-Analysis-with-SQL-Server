@@ -5,7 +5,8 @@ I performed automation and access control analysis on the NELNA GV- ASManger
 Server using Microsoft SQL Server by designing and implementing automation solutions that streamlined data workflows,
 reduce errors, and increase productivity. Tools used: ASManger, Microsoft Excel and SQL.
 
-**Streamlining Data Engineering: Empowering Security Through Automation and Access Control Analysis**
+
+# **Streamlining Data Engineering: Empowering Security Through Automation and Access Control Analysis**
 
 As a dedicated Data Engineer, I embarked on a paramount project that has been a pivotal achievement in my career - the Automation and Access Control Analysis project. This endeavor encompassed diverse aspects of Data Engineering tasks, and I am excited to share the journey that led to its resounding success.
 
